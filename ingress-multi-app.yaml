@@ -1,0 +1,36 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  annotations:
+    kubectl.kubernetes.io/last-applied-configuration: |
+      {"apiVersion":"networking.k8s.io/v1","kind":"Ingress","metadata":{"annotations":{"nginx.ingress.kubernetes.io/rewrite-target":"/"},"name":"multi-app-ingress","namespace":"default"},"spec":{"rules":[{"host":"myapps.local","http":{"paths":[{"backend":{"service":{"name":"app1-svc","port":{"number":80}}},"path":"/app1","pathType":"Prefix"},{"backend":{"service":{"name":"app2-svc","port":{"number":80}}},"path":"/app2","pathType":"Prefix"}]}}]}}
+    nginx.ingress.kubernetes.io/rewrite-target: /
+  creationTimestamp: "2025-08-30T00:38:15Z"
+  generation: 2
+  name: multi-app-ingress
+  namespace: default
+  resourceVersion: "17250"
+  uid: 7ecdeadc-4f44-4675-951c-4541fd966e03
+spec:
+  ingressClassName: nginx
+  rules:
+  - http:
+      paths:
+      - backend:
+          service:
+            name: app1-svc
+            port:
+              number: 80
+        path: /app1
+        pathType: Prefix
+      - backend:
+          service:
+            name: app2-svc
+            port:
+              number: 80
+        path: /app2
+        pathType: Prefix
+status:
+  loadBalancer:
+    ingress:
+    - ip: 192.168.49.2
